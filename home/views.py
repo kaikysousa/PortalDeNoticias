@@ -4,23 +4,33 @@ from django.contrib.auth import login
 import logging
 from home.forms import CustomUserCreationForm
 from django.shortcuts import render
+from django import forms
 
+from home.models import CustomUser
+
+
+class RegistrationForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password', 'email','is_reader','is_journalist']
 def home(request):
     # Renderiza a página inicial
     return render(request, 'home.html')
 # Create your views here.
-def register(request):
+def register_view(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_reader = form.cleaned_data['is_reader']
-            user.is_journalist = form.cleaned_data['is_journalist']
-            user.save()
-            login(request, user)  # Autentica o usuário
-            return redirect('home')  # Redireciona para a homepage
+            user.set_password(form.cleaned_data['password'])  # Hash a senha
+            user.save()  # Salva o usuário no banco de dados
+            forms.clean()
+            login(
+                request, user
+            )
+            return redirect('home')
     else:
-        form = CustomUserCreationForm()
+        form = RegistrationForm()
 
     return render(request, 'register.html', {'form': form})
 

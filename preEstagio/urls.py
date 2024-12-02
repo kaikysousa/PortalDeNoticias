@@ -5,6 +5,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 
+from home.views import register_view
+
 urlpatterns = [
     # URL para o admin
     path('admin/', admin.site.urls),
@@ -13,7 +15,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     # URL para o registro de um novo usuário
-    path('register/', views.register, name='register'),
+    path('register/', register_view, name='register'),
 
     # URL para o login
     path('login/', views.CustomLoginView.as_view(), name='user_login'),

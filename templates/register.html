@@ -43,16 +43,6 @@
             {% csrf_token %}
             {{ form.as_p }}
 
-            <div class="mb-3">
-                <label for="id_is_reader" class="form-label">Sou Leitor</label>
-                {{ form.is_reader }}
-            </div>
-
-            <div class="mb-3">
-                <label for="id_is_journalist" class="form-label">Sou Jornalista</label>
-                {{ form.is_journalist }}
-            </div>
-
             <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
         </form>
 
