@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 
-from home.views import register_view
+from home.views import register_view, logout_view, login_view
 
 urlpatterns = [
     # URL para o admin
@@ -18,10 +18,12 @@ urlpatterns = [
     path('register/', register_view, name='register'),
 
     # URL para o login
-    path('login/', views.CustomLoginView.as_view(), name='user_login'),
+    path('login/', login_view, name='user_login'),
 
     # URL para o logout (usando o logout padrão do Django)
-    path('logout/', LogoutView.as_view(next_page='home'), name='user_logout'),
+    path('logout/', views.logout_view, name='user_logout'),
+
+    path('profile/', views.profile_view, name='user_profile')
 ]
 
 # Adicionando os arquivos estáticos e de mídia durante o desenvolvimento
