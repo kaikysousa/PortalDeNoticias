@@ -3,8 +3,8 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, blank=False, null=False)
-    LEITOR = "LR"
-    ESCRITOR = "ER"
+    LEITOR = "Leitor"
+    ESCRITOR = "Escritor"
     LEITOR_OU_ESCRITOR = {
         LEITOR: "Leitor",
         ESCRITOR: "Escritor",

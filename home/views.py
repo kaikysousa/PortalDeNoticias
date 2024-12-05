@@ -12,7 +12,10 @@ class RegistrationForm(forms.ModelForm):
         model = CustomUser
         fields = ['username', 'password', 'email','role']
 def home(request):
-    role = request.user.role
+    if request.user.is_authenticated:
+        role = request.user.role
+    else:
+        role = None
     return render(request, 'home.html', {'user':request.user})
 # Create your views here.
 def register_view(request):
