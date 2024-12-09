@@ -23,7 +23,7 @@ urlpatterns = [
 
     # URLs relacionadas a postagens
     path('post/', views_postagem.post_view, name='post_view'),
-    path('post_detail/<int:id>/', views_postagem.post_detail, name='post_detail'),
+    path('post_detail/<int:pk>/', views_postagem.post_detail, name='post_detail'),
 ]
 
 # Serve arquivos de mídia durante o desenvolvimento

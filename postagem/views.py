@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django import forms
 from postagem.forms import PostagemForm
 from postagem.models import Postagem
 
