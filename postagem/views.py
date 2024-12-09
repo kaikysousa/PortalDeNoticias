@@ -5,6 +5,8 @@ from postagem.models import Postagem
 
 
 def post_view(request):
+    if not request.user.is_authenticated:
+        return redirect('user_login')
     if request.method == 'POST':
         form = PostagemForm(request.POST, request.FILES)
         if form.is_valid():
