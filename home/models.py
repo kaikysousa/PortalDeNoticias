@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from pysss import password
+
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, blank=False, null=False)
@@ -12,8 +14,6 @@ class CustomUser(AbstractUser):
     role = models.CharField(
         max_length=10, choices=LEITOR_OU_ESCRITOR.items(), default=LEITOR
     )
-    def get_role(self):
-        return self.role
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

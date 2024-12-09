@@ -1,11 +1,11 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
 
+
 class CustomUserCreationForm(UserCreationForm):
-
-
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'password1', 'password2', 'role']
@@ -14,18 +14,17 @@ class CustomUserCreationForm(UserCreationForm):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({'class': 'form-control'})
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control'})
         self.fields['role'].widget.attrs.update({'class': 'form-control'})
+        self.fields['role'].label = "Tipo de usuário"
 
-    def save(self, commit=True):
-        user = super(CustomUserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
+    def clean(self):
+        cleaned_data = super(CustomUserCreationForm, self).clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
+        if password1 != password2:
+            raise forms.ValidationError("As senhas não correspondem.")
 
-
+        return cleaned_data

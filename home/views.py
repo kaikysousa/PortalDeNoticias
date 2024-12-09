@@ -5,12 +5,13 @@ from django.shortcuts import render
 from django import forms
 from home.models import CustomUser
 from postagem.models import Postagem
+from home.forms import CustomUserCreationForm
 
 
 class RegistrationForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'password', 'email','role']
+        fields = ['username', 'email','role']
 
 
 def home(request):
@@ -25,15 +26,16 @@ def home(request):
 def register_view(request):
     # Lida com a lógica de registro de novos usuários
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # Hash a senha
-            user.save()  # Salva o usuário no banco de dados
+            password = form.cleaned_data.get('password') or form.cleaned_data.get('password1')
+            user.set_password(password)
+            user.save()
             login(request, user)
             return redirect('home')
     else:
-        form = RegistrationForm()
+        form = CustomUserCreationForm()
 
     return render(request, 'register.html', {'form': form})
 
