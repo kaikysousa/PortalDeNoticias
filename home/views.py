@@ -57,3 +57,11 @@ def logout_view(request):
     # Lida com a lógica de logout
     logout(request)
     return render(request, 'home.html')
+
+def delete_post(request, pk):
+    postagem = Postagem.objects.get(pk=pk)
+    if postagem.autor == request.user:
+        postagem.delete()
+        return redirect('user_profile')
+    else:
+        return render(request, 'profile.html', {'user':request.user, 'postagem':Postagem.objects.all()})

@@ -23,3 +23,4 @@ def post_view(request):
 def post_detail(request, pk):
     postagem = Postagem.objects.get(pk=pk)
     return render(request, 'postDetail.html', {'postagem':postagem})
+

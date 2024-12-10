@@ -24,6 +24,7 @@ urlpatterns = [
     # URLs relacionadas a postagens
     path('post/', views_postagem.post_view, name='post_view'),
     path('post_detail/<int:pk>/', views_postagem.post_detail, name='post_detail'),
+    path('delete_post/<int:pk>', views.delete_post, name='delete_post')
 ]
 
 # Serve arquivos de mídia durante o desenvolvimento
