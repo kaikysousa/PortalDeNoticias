@@ -50,7 +50,8 @@ def login_view(request):
 
 def profile_view(request):
     # Renderiza a página de perfil do usuário autenticado
-    return render(request, 'profile.html', {'user':request.user})
+    posts_usuario = Postagem.objects.filter(autor=request.user)
+    return render(request, 'profile.html', {'user':request.user, 'postagem':Postagem.objects.all(),'post_usuario':posts_usuario})
 
 def logout_view(request):
     # Lida com a lógica de logout
