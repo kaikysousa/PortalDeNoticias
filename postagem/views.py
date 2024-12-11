@@ -24,3 +24,14 @@ def post_detail(request, pk):
     postagem = Postagem.objects.get(pk=pk)
     return render(request, 'postDetail.html', {'postagem':postagem})
 
+def edit_post(request, pk):
+    postagem = Postagem.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = PostagemForm(request.POST, request.FILES, instance=postagem)
+        if form.is_valid():
+            form.save()
+            return redirect('user_profile')
+    else:
+        form = PostagemForm(instance=postagem)
+
+    return render(request,'edit.html', {'form':form})

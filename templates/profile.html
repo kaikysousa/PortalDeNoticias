@@ -1,4 +1,4 @@
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,13 +48,16 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ postagem.titulo }}</h5>
                         <p class="card-text">{{ postagem.conteudo }}</p>
-                        <img src="{{ postagem.imagem.url }}" alt="Imagem da postagem" class="img-fluid">
+                        <div>
+                            <img src="{{ postagem.imagem.url }}" alt="Imagem da postagem" class="img-fluid">
+                        </div>
                         <a href="{% url 'post_detail' postagem.id %}" class="btn btn-primary">Ver mais</a>
                         <form action="{% url 'delete_post' postagem.id %}" method="POST" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Excluir</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta postagem?')">Excluir</button>
                         </form>
-                        <a href="#" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'edit_post' postagem.id %}" class="btn btn-warning">Editar</a>
+                    </div>
             {% endfor %}
         </div>
     </div>
