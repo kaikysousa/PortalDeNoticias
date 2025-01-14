@@ -1,6 +1,11 @@
+from django.db.migrations import serializer
 from django.shortcuts import render, redirect
 from postagem.forms import PostagemForm
 from postagem.models import Postagem
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from postagem.serializers import PostagemSerializer
 
 
 def post_view(request):
@@ -35,3 +40,9 @@ def edit_post(request, pk):
         form = PostagemForm(instance=postagem)
 
     return render(request,'edit.html', {'form':form})
+
+class PostagemAPIView(APIView):
+    def get(self,request):
+        postagem = Postagem.objects.all()
+        serializer = PostagemSerializer(postagem, many=True)
+        return Response(serializer.data)
